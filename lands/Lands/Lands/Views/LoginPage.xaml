@@ -1,0 +1,73 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Lands.Views.LoginPage"
+             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             Title="Lands">
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout Padding="5">
+                <Image Source="logo.png"/>
+                <Grid Margin="10, 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                        Text="E-Mail"/>
+                    <Entry
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Placeholder="Enter your email..."
+                        Keyboard="Email"/>
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        VerticalOptions="Center"
+                    Text="Password"/>
+                    <Entry
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Placeholder="Enter your password..."
+                    IsPassword="True"/>
+                </Grid>
+
+                <StackLayout Orientation="Horizontal" Margin="10, 0">
+                    <Label Text="Remember me" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
+                    <Switch  HorizontalOptions="End"/>
+                </StackLayout>
+
+                <ActivityIndicator></ActivityIndicator>
+                
+                <Label
+                    HorizontalOptions="Center"
+                    Text="I forgot my password..."
+                    TextColor="Blue"
+                    VerticalOptions="Center"/>
+                <StackLayout Margin="30, 0">
+                    <Button 
+                        Text="Login"
+                        BackgroundColor="Purple"
+                        TextColor="White"
+                        HeightRequest="50"
+                        BorderRadius="25"/>
+                    <Button 
+                        Text="Register"
+                        BackgroundColor="Navy"
+                        TextColor="White"
+                        HeightRequest="50"
+                        BorderRadius="25"/>
+                </StackLayout>
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                    <Image Source="facebook_logo.png" WidthRequest="65"/>
+                    <Image Source="twitter_logo.png" WidthRequest="100"/>
+                    <Image Source="instagram_logo.png" WidthRequest="65"/>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

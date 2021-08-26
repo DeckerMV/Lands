@@ -6,9 +6,9 @@
              Title="Lands">
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout Padding="5">
+            <StackLayout Padding="5" BindingContext="{Binding Login}">
                 <Image Source="logo.png"/>
-                <Grid Margin="10, 0">
+                <Grid Margin="10, 0" VerticalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="2*"/>
@@ -23,33 +23,36 @@
                         Grid.Row="0"
                         Grid.Column="1"
                         Placeholder="Enter your email..."
+                        Text="{Binding Email, Mode=TwoWay}"
                         Keyboard="Email"/>
                     <Label
                         Grid.Row="1"
                         Grid.Column="0"
                         VerticalOptions="Center"
-                    Text="Password"/>
+                        Text="Password"/>
                     <Entry
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Placeholder="Enter your password..."
-                    IsPassword="True"/>
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Placeholder="Enter your password..."
+                        Text="{Binding Password, Mode=TwoWay}"
+                        IsPassword="True"/>
                 </Grid>
 
                 <StackLayout Orientation="Horizontal" Margin="10, 0">
                     <Label Text="Remember me" VerticalOptions="Center" HorizontalOptions="StartAndExpand"/>
-                    <Switch  HorizontalOptions="End"/>
+                    <Switch IsToggled="{Binding IsRemembered, Mode=TwoWay}" HorizontalOptions="End"/>
                 </StackLayout>
 
-                <ActivityIndicator></ActivityIndicator>
+                <ActivityIndicator VerticalOptions="CenterAndExpand" IsRunning="{Binding IsRunning, Mode=TwoWay}"></ActivityIndicator>
                 
                 <Label
                     HorizontalOptions="Center"
                     Text="I forgot my password..."
                     TextColor="Blue"
-                    VerticalOptions="Center"/>
-                <StackLayout Margin="30, 0">
-                    <Button 
+                    VerticalOptions="CenterAndExpand"/>
+                <StackLayout Margin="30, 0" VerticalOptions="CenterAndExpand">
+                    <Button
+                        Command="{Binding LoginCommand}"
                         Text="Login"
                         BackgroundColor="Purple"
                         TextColor="White"
@@ -62,7 +65,7 @@
                         HeightRequest="50"
                         BorderRadius="25"/>
                 </StackLayout>
-                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
                     <Image Source="facebook_logo.png" WidthRequest="65"/>
                     <Image Source="twitter_logo.png" WidthRequest="100"/>
                     <Image Source="instagram_logo.png" WidthRequest="65"/>

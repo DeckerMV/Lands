@@ -5,6 +5,7 @@
              BindingContext="{Binding Main, Source={StaticResource Locator}}"
              Title="Lands">
     <ContentPage.Content>
+        
         <ScrollView>
             <StackLayout Padding="5" BindingContext="{Binding Login}">
                 <Image Source="logo.png"/>
@@ -44,7 +45,7 @@
                 </StackLayout>
 
                 <ActivityIndicator VerticalOptions="CenterAndExpand" IsRunning="{Binding IsRunning, Mode=TwoWay}"></ActivityIndicator>
-                
+
                 <Label
                     HorizontalOptions="Center"
                     Text="I forgot my password..."
@@ -52,24 +53,27 @@
                     VerticalOptions="CenterAndExpand"/>
                 <StackLayout Margin="30, 0" VerticalOptions="CenterAndExpand">
                     <Button
-                        Command="{Binding LoginCommand}"
+                        Command="{Binding LoginCommand, Mode=OneWay}"
                         Text="Login"
                         BackgroundColor="Purple"
                         TextColor="White"
                         HeightRequest="50"
-                        BorderRadius="25"/>
+                        BorderRadius="25"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"/>
                     <Button 
                         Text="Register"
                         BackgroundColor="Navy"
                         TextColor="White"
                         HeightRequest="50"
-                        BorderRadius="25"/>
+                        BorderRadius="25"
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
                     <Image Source="facebook_logo.png" WidthRequest="65"/>
                     <Image Source="twitter_logo.png" WidthRequest="100"/>
                     <Image Source="instagram_logo.png" WidthRequest="65"/>
                 </StackLayout>
+
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

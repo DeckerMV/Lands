@@ -5,13 +5,14 @@ using System.ComponentModel;
 using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Lands.Views;
 
 namespace Lands.ViewModels
 {
     public class LoginViewModel : BaseViewModel
     {
 
-        #region Attributes
+        #region Fields
         private string email;
         private string password;
         private bool isRunning;
@@ -22,7 +23,7 @@ namespace Lands.ViewModels
         public string Email
         {
             get => email;
-            set => email = value;
+            set => SetValue(ref email, value);
         }
         public string Password
         {
@@ -39,18 +40,19 @@ namespace Lands.ViewModels
         {
             get => isEnabled;
             set => SetValue(ref isEnabled, value);
-        } 
+        }
         #endregion
 
-        //COMANDS
-
-        public ICommand LoginCommand { get => new RelayCommand(LoginTap); }
-
+        #region Commands
+        public ICommand LoginCommand { get => new RelayCommand(LoginTap); } 
+        #endregion
 
         public LoginViewModel()
         {
             IsRemembered = true;
             IsEnabled = true;
+
+            //http://restcountries.eu/rest/v2/all
         }
 
         private async void LoginTap()
@@ -82,8 +84,14 @@ namespace Lands.ViewModels
                 return;
             }
 
-            //success
-            await Application.Current.MainPage.DisplayAlert("LOGGED IN", "Nice!", "Accept");
+            IsRunning = false;
+            IsEnabled = true;
+
+            Email = string.Empty;
+            Password = string.Empty;
+
+            MainViewModel.GetInstance().Lands = new LandsViewModel();
+            await Application.Current.MainPage.Navigation.PushAsync(new LandsPage());
 
         }
 

@@ -2,12 +2,12 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Lands.Views.LoginPage"
-             BindingContext="{Binding Main, Source={StaticResource Locator}}"
+             BindingContext="{Binding MainVM, Source={StaticResource Locator}}"
              Title="Login">
     <ContentPage.Content>
         
         <ScrollView>
-            <StackLayout Padding="5" BindingContext="{Binding Login}">
+            <StackLayout Padding="5" BindingContext="{Binding LoginVM}">
                 <Image Source="logo.png"/>
                 <Grid Margin="10, 0" VerticalOptions="CenterAndExpand">
                     <Grid.ColumnDefinitions>
@@ -69,7 +69,11 @@
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay}"/>
                 </StackLayout>
                 <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
-                    <Image Source="facebook_logo.png" WidthRequest="65"/>
+                    <Image Source="facebook_logo.png" WidthRequest="65">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding LoginFacebookCommand}"/>
+                        </Image.GestureRecognizers>
+                    </Image>
                     <Image Source="twitter_logo.png" WidthRequest="100"/>
                     <Image Source="instagram_logo.png" WidthRequest="65"/>
                 </StackLayout>

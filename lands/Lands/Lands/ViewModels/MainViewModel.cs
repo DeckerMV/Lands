@@ -6,8 +6,9 @@ namespace Lands.ViewModels
 {
     public class MainViewModel
     {
-        public LoginViewModel Login { get; set; }
-        public LandsViewModel Lands { get; set; }
+        public LoginViewModel LoginVM { get; set; }
+        public LandsViewModel LandsVM { get; set; }
+        public SingleLandViewModel SingleLandVM { get; set; }
 
         #region Singleton
         private static MainViewModel instance;
@@ -19,10 +20,10 @@ namespace Lands.ViewModels
         }
         #endregion
 
-        public MainViewModel()
+        private MainViewModel()
         {
             instance = this;
-            Login = new LoginViewModel();
+            LoginVM = new LoginViewModel();
         }
 
 

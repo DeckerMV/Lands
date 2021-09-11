@@ -51,8 +51,6 @@ namespace Lands.ViewModels
         {
             IsRemembered = true;
             IsEnabled = true;
-
-            //http://restcountries.eu/rest/v2/all
         }
 
         private async void LoginTap()
@@ -90,7 +88,7 @@ namespace Lands.ViewModels
             Email = string.Empty;
             Password = string.Empty;
 
-            MainViewModel.GetInstance().Lands = new LandsViewModel();
+            MainViewModel.GetInstance().LandsVM = new LandsViewModel();
             await Application.Current.MainPage.Navigation.PushAsync(new LandsPage());
 
         }

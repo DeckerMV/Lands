@@ -11,21 +11,21 @@ using Xamarin.Forms;
 
 namespace Lands.ViewModels
 {
-    public class LandsViewModel: BaseViewModel
+    public class LandsViewModel : BaseViewModel
     {
         #region Services
         private APIServices apiService;
         #endregion
 
         #region Fields
-        private ObservableCollection<Land> lands;
+        private ObservableCollection<LandItemViewModel> lands;
         private bool isRefreshing;
         private string filter;
         private List<Land> ogList;
         #endregion
 
         #region Properties
-        public ObservableCollection<Land> Lands
+        public ObservableCollection<LandItemViewModel> Lands
         {
             get => lands;
             set => SetValue(ref lands, value);
@@ -48,7 +48,7 @@ namespace Lands.ViewModels
 
         #region Commands
         public ICommand RefreshCommand 
-        {
+        {//to re-load the Lands list
             get => new RelayCommand(LoadLands);
         }
         public ICommand SearchCommand
@@ -68,12 +68,12 @@ namespace Lands.ViewModels
         {
             if (string.IsNullOrEmpty(Filter))
             {
-                Lands = new ObservableCollection<Land>(ogList);
+                Lands = new ObservableCollection<LandItemViewModel>(ToLandItemViewModel());
             }
             else
             {
-                Lands = new ObservableCollection<Land>(
-                    ogList.Where(
+                Lands = new ObservableCollection<LandItemViewModel>(
+                    ToLandItemViewModel().Where(
                         lnd => lnd.Name.ToLower().Contains(Filter.ToLower()) ||
                             lnd.Capital.ToLower().Contains(Filter.ToLower())));
             }
@@ -82,9 +82,9 @@ namespace Lands.ViewModels
         private async void LoadLands()
         {
             IsRefreshing = true;
-            var connection = await apiService.CheckConnection();
+            Response connection = await apiService.CheckConnection();
 
-            if (!connection.isSuccess)
+            if (!connection.IsSuccess)
             {
                 IsRefreshing = false;
                 await Application.Current.MainPage.DisplayAlert("Error", connection.Message, "Accept");
@@ -92,13 +92,48 @@ namespace Lands.ViewModels
                 return;
             }
 
-            var response = await apiService.GetList<Land>("https://restcountries.eu", "/rest", "/v2/all");
-            if (!response.isSuccess)
-                await Application.Current.MainPage.DisplayAlert("Error", response.Message, "Accept");
+            Response landsListResponse = await apiService.GetList<Land>("https://restcountries.eu", "/rest", "/v2/all");
+            if (!landsListResponse.IsSuccess)
+            {
+                await Application.Current.MainPage.DisplayAlert("Error", landsListResponse.Message, "Accept");
+                await Application.Current.MainPage.Navigation.PopAsync();
+                return;
+            }
 
-            ogList = (List<Land>) response.Result;
-            Lands = new ObservableCollection<Land>(ogList);
+            ogList = landsListResponse.Result as List<Land>;
+            Lands = new ObservableCollection<LandItemViewModel>(ToLandItemViewModel());
             IsRefreshing = false;
+        }
+
+        private IEnumerable<LandItemViewModel> ToLandItemViewModel()
+        {
+            return ogList.Select(og => new LandItemViewModel()
+            {
+                Alpha2Code = og.Alpha2Code,
+                AltSpellings = og.AltSpellings,
+                Alpha3Code = og.Alpha3Code,
+                Area = og.Area,
+                Borders = og.Borders,
+                CallingCodes = og.CallingCodes,
+                Capital = og.Capital,
+                Cioc = og.Cioc,
+                Currencies = og.Currencies,
+                Demonym = og.Demonym,
+                Flag = og.Flag,
+                Gini = og.Gini,
+                Languages = og.Languages,
+                Latlng = og.Latlng,
+                Name = og.Name,
+                NativeName = og.NativeName,
+                NumericCode = og.NumericCode,
+                Population = og.Population,
+                Region = og.Region,
+                RegionalBlocs = og.RegionalBlocs,
+                Subregion = og.Subregion,
+                Timezones = og.Timezones,
+                TopLevelDomain = og.TopLevelDomain,
+                Translations = og.Translations
+            });
         }
     }
 }

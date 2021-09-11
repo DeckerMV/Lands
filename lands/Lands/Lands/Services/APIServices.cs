@@ -14,13 +14,13 @@ namespace Lands.Services
         public async Task<Response> CheckConnection()
         {
             if (!CrossConnectivity.Current.IsConnected)
-                return new Response() { isSuccess = false, Message = "Can't connect, please turn on your internet connection." };
+                return new Response() { IsSuccess = false, Message = "Can't connect, please turn on your internet connection." };
 
-            var isReachable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
+            bool isReachable = await CrossConnectivity.Current.IsRemoteReachable("google.com");
             if (!isReachable)
-                return new Response() { isSuccess = false, Message = "Can't connect to internet, please verify your connection." };
+                return new Response() { IsSuccess = false, Message = "Can't connect to internet, please verify your connection." };
 
-            return new Response() { isSuccess = true, Message = "Successfully connected" };
+            return new Response() { IsSuccess = true, Message = "Successfully connected" };
         }
 
         public async Task<TokenResponse> GetToken(string baseUrl, string username, string password)
@@ -43,7 +43,6 @@ namespace Lands.Services
                 return null;
             }
         }
-
         public async Task<Response> GetList<T>(string baseUrl, string servicePrefix, string controller)
         {
             try
@@ -51,18 +50,18 @@ namespace Lands.Services
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri(baseUrl);
                 string url = string.Format("{0}{1}", servicePrefix, controller);
-                HttpResponseMessage response = await client.GetAsync(url);
-                string result = await response.Content.ReadAsStringAsync();
+                HttpResponseMessage httpRequestResponse = await client.GetAsync(url);
+                string resultJSON = await httpRequestResponse.Content.ReadAsStringAsync();
 
-                if (!response.IsSuccessStatusCode)
-                    return new Response { isSuccess = false, Message = result };
+                if (!httpRequestResponse.IsSuccessStatusCode)
+                    return new Response { IsSuccess = false, Message = "An error ocurred while trying to load the lands.", Result = resultJSON };
 
-                List<T> list = JsonConvert.DeserializeObject<List<T>>(result);
-                return new Response { isSuccess = true, Message = "List successfully created", Result = list };
+                List<T> list = JsonConvert.DeserializeObject<List<T>>(resultJSON);
+                return new Response { IsSuccess = true, Message = "List successfully created", Result = list };
             }
             catch (Exception ex)
             {
-                return new Response { isSuccess = false, Message = ex.Message };
+                return new Response { IsSuccess = false, Message = ex.Message };
             }
         }
     

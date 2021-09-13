@@ -36,15 +36,15 @@
                                     </Grid.ColumnDefinitions>
 
                                     <StackLayout
-                                    Grid.Column="0"
-                                    VerticalOptions="Center">
+                                        Grid.Column="0"
+                                        VerticalOptions="Center">
                                         <Label
-                                        FontAttributes="Bold"
-                                        FontSize="Medium"
-                                        Text="{Binding Name}"/>
+                                            FontAttributes="Bold"
+                                            FontSize="Medium"
+                                            Text="{Binding Name}"/>
                                         <Label
-                                        TextColor="Black"
-                                        Text="{Binding Capital}"/>
+                                            TextColor="Black"
+                                            Text="{Binding Capital}"/>
                                     </StackLayout>
 
                                     <Image

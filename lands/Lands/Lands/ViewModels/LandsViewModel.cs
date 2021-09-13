@@ -21,7 +21,6 @@ namespace Lands.ViewModels
         private ObservableCollection<LandItemViewModel> lands;
         private bool isRefreshing;
         private string filter;
-        private List<Land> ogList;
         #endregion
 
         #region Properties
@@ -30,7 +29,7 @@ namespace Lands.ViewModels
             get => lands;
             set => SetValue(ref lands, value);
         }
-        public bool IsRefreshing 
+        public bool IsRefreshing
         { 
             get => isRefreshing;
             set => SetValue(ref isRefreshing, value);
@@ -100,14 +99,14 @@ namespace Lands.ViewModels
                 return;
             }
 
-            ogList = landsListResponse.Result as List<Land>;
+            MainViewModel.GetInstance().Lands = landsListResponse.Result as List<Land>;
             Lands = new ObservableCollection<LandItemViewModel>(ToLandItemViewModel());
             IsRefreshing = false;
         }
 
         private IEnumerable<LandItemViewModel> ToLandItemViewModel()
         {
-            return ogList.Select(og => new LandItemViewModel()
+            return MainViewModel.GetInstance().Lands.Select(og => new LandItemViewModel()
             {
                 Alpha2Code = og.Alpha2Code,
                 AltSpellings = og.AltSpellings,

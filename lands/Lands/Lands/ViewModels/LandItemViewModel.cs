@@ -13,13 +13,13 @@ namespace Lands.ViewModels
     {
         public ICommand SelectLandCommand
         {
-            get => new RelayCommand(SelectLand);
+            get => new RelayCommand(SelectLand);            
         }
 
         private async void SelectLand()
         {
             MainViewModel.GetInstance().SingleLandVM = new SingleLandViewModel(this);
-            await Application.Current.MainPage.Navigation.PushAsync(new SingleLandPage());
+            await Application.Current.MainPage.Navigation.PushAsync(new SingleLandTabbedPage());
         }
     }
 }

@@ -6,10 +6,45 @@
              IconImageSource="ic_languages.png"
              Title="Languages">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Languages"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout
+            BindingContext="{Binding SingleLandVM}"
+            Padding="5">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="Center"
+                Text="{Binding SelectedLand.Name}"
+                TextColor="Black">
+            </Label>
+            <ListView
+                HasUnevenRows="True"
+                ItemsSource="{Binding Languages}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width=".5*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    Text="{Binding Iso6392}"
+                                    TextColor="Black"/>
+                                <Label
+                                    Grid.Column="1"
+                                    Text="{Binding Name}"
+                                    TextColor="Black"/>
+                                <Label
+                                    Grid.Column="2"
+                                    Text="{Binding NativeName}"
+                                    TextColor="Black"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
